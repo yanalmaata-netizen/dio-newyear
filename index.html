@@ -360,7 +360,7 @@ a.btn{text-decoration:none}
 #dionis-media,#gerkules-media,#gorgona-media{min-height:0;padding-block:8px 64px}
 #dionis-media .mg,#gerkules-media .mg,#gorgona-media .mg{margin-top:0}
 @media(max-width:760px){#dionis,#gerkules,#gorgona{padding-block:64px 4px}#dionis-media,#gerkules-media,#gorgona-media{padding-block:4px 48px}}
-.rv{transition:transform .35s ease,opacity .3s ease!important}
+.rv{transition:transform .6s ease,opacity .5s ease!important}
 .soc{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
 .soc .s{display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 24px 0 18px;border-radius:999px;font:600 16px var(--font);color:#fff;text-decoration:none;transition:transform .2s}
 .soc .s:hover{transform:translateY(-2px)}
@@ -777,9 +777,9 @@ document.addEventListener('keydown',function(e){
   function build(){
     var vh=innerHeight;pos=[];
     slides.forEach(function(el){
-      var t=el.offsetTop,h=el.offsetHeight,d=el.classList.contains('gold')?300:el.id==='cover'?250:el.querySelector('.mg')?300:250;
+      var t=el.offsetTop,h=el.offsetHeight,d=el.classList.contains('gold')?2400:el.id==='cover'?2000:el.querySelector('.mg')?2600:2200;
       pos.push({y:t,d:d});
-      if(h>vh*1.08)pos.push({y:t+h-vh,d:Math.max(120,d-100)});
+      if(h>vh*1.08)pos.push({y:t+h-vh,d:Math.max(900,d-500)});
     });
   }
   function ease(t){return -(Math.cos(Math.PI*t)-1)/2}
@@ -794,7 +794,7 @@ document.addEventListener('keydown',function(e){
     if(!run)return;
     if(i>=pos.length){run=false;root.classList.remove('auto');ui();return}
     k=i;
-    glide(pos[i].y,i===0?1:Math.min(160,Math.max(100,Math.abs(pos[i].y-scrollY)*.06)),function(){tm=setTimeout(function(){go(i+1)},pos[i].d)});
+    glide(pos[i].y,i===0?1:Math.min(1100,Math.max(650,Math.abs(pos[i].y-scrollY)*.5)),function(){tm=setTimeout(function(){go(i+1)},pos[i].d)});
   }
   function start(){
     build();run=true;root.classList.add('auto');ui();
