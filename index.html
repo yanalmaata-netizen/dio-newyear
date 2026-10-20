@@ -370,6 +370,7 @@ a.btn{text-decoration:none}
 .soc .gis{background:#1BA140}
 .soc .web{background:#1E1206;color:#FFE600}
 @media(max-width:520px){.soc .s{flex:1 1 calc(50% - 6px);justify-content:center;padding:0 14px}}
+html.auto{scroll-behavior:auto!important;scroll-snap-type:none!important}
 </style>
 </head>
 <body>
@@ -775,14 +776,18 @@ document.addEventListener('keydown',function(e){
   var PLAY='M3 1.5v11l9-5.5z',PAUSE='M2.5 1.5h3v11h-3zM8.5 1.5h3v11h-3z';
   var shown=false;function ui(){if(run)shown=true;btn.hidden=!shown;lab.textContent=run?'Пауза':'Продолжить показ';ico.setAttribute('d',run?PAUSE:PLAY);btn.setAttribute('aria-label',run?'Пауза':'Продолжить автопоказ')}
   function build(){
-    var vh=innerHeight;pos=[];
+    var vh=innerHeight,maxY=Math.max(0,document.documentElement.scrollHeight-vh),groups=[];pos=[];
     slides.forEach(function(el){
-      var t=el.offsetTop,h=el.offsetHeight,d=el.classList.contains('gold')?1800:el.id==='cover'?1400:el.querySelector('.mg')?2000:1600;
-      pos.push({y:t,d:d});
-      if(h>vh*1.08)pos.push({y:t+h-vh,d:Math.max(900,d-500)});
+      if(/-media$/.test(el.id)&&groups.length)groups[groups.length-1].push(el);else groups.push([el]);
+    });
+    groups.forEach(function(g){
+      var f=g[0],l=g[g.length-1],t=f.offsetTop,h=l.offsetTop+l.offsetHeight-t;
+      var d=f.classList.contains('gold')?1800:f.id==='cover'?1400:g.length>1?2000:1600;
+      if(h<=vh*1.1){pos.push({y:Math.max(0,Math.min(maxY,t-(vh-h)/2)),d:d})}
+      else{var n=Math.ceil(h/vh),span=h-vh;for(var k=0;k<n;k++)pos.push({y:Math.min(maxY,t+span*k/(n-1)),d:d})}
     });
   }
-  function ease(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2}
+  function ease(t){return -(Math.cos(Math.PI*t)-1)/2}
   function glide(to,ms,done){
     var from=scrollY,t0=performance.now();
     (function f(now){
@@ -794,7 +799,7 @@ document.addEventListener('keydown',function(e){
     if(!run)return;
     if(i>=pos.length){run=false;root.classList.remove('auto');ui();return}
     k=i;
-    glide(pos[i].y,i===0?1:Math.min(2200,Math.max(1500,Math.abs(pos[i].y-scrollY)*.9)),function(){tm=setTimeout(function(){go(i+1)},pos[i].d)});
+    glide(pos[i].y,i===0?1:Math.min(1800,Math.max(1200,Math.abs(pos[i].y-scrollY)*.8)),function(){tm=setTimeout(function(){go(i+1)},pos[i].d)});
   }
   function start(){
     build();run=true;root.classList.add('auto');ui();
