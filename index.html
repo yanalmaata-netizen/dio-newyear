@@ -786,9 +786,9 @@ document.addEventListener('keydown',function(e){
   function build(){
     var vh=innerHeight;pos=[];
     slides.forEach(function(el){
-      var t=el.offsetTop,h=el.offsetHeight,d=el.classList.contains('gold')?9000:el.id==='cover'?5500:el.querySelector('.mg')?9000:7500;
+      var t=el.offsetTop,h=el.offsetHeight,d=el.classList.contains('gold')?5500:el.id==='cover'?3800:el.querySelector('.mg')?5500:4200;
       pos.push({y:t,d:d});
-      if(h>vh*1.08)pos.push({y:t+h-vh,d:d-1500});
+      if(h>vh*1.08)pos.push({y:t+h-vh,d:d-1000});
     });
   }
   function ease(t){return -(Math.cos(Math.PI*t)-1)/2}
@@ -803,7 +803,7 @@ document.addEventListener('keydown',function(e){
     if(!run)return;
     if(i>=pos.length){run=false;root.classList.remove('auto');ui();return}
     k=i;
-    glide(pos[i].y,i===0?1:Math.min(4800,Math.max(3200,Math.abs(pos[i].y-scrollY)*2.6)),function(){tm=setTimeout(function(){go(i+1)},pos[i].d)});
+    glide(pos[i].y,i===0?1:Math.min(2600,Math.max(1500,Math.abs(pos[i].y-scrollY)*1.4)),function(){tm=setTimeout(function(){go(i+1)},pos[i].d)});
   }
   function start(){
     build();run=true;root.classList.add('auto');ui();
