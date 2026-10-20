@@ -339,9 +339,9 @@ a.btn{text-decoration:none}
 #intro h1{font-size:clamp(32px,6.2vw,78px);line-height:1.05;text-wrap:balance}
 #intro .eyebrow{font-size:clamp(11px,1.5vw,14px);letter-spacing:.14em;text-align:center;max-width:90vw}
 @media(max-width:700px){
-  .cin .a{background-position:47% 50%;animation-name:cinAm}.cin .b{background-position:90% 50%;animation-name:cinBm}
-  @keyframes cinAm{0%{opacity:1;transform:scale(1)}42%{opacity:1}50%,92%{opacity:0;transform:scale(1.12)}100%{opacity:1;transform:scale(1)}}
-  @keyframes cinBm{0%,42%{opacity:0;transform:scale(1)}50%{opacity:1}92%{opacity:1;transform:scale(1.12)}100%{opacity:0;transform:scale(1.14)}}
+  .cin{background:linear-gradient(180deg,#0e1a3a 0%,#091126 45%,#060a18 100%)}.cin .cl{background-size:146% auto;background-repeat:no-repeat;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 8%,#000 33%,transparent 46%);mask-image:linear-gradient(180deg,transparent 0,#000 8%,#000 33%,transparent 46%)}.cin .a{background-position:100% 14%;animation-name:cinAm}.cin .b{background-position:59% 14%;animation-name:cinBm}
+  @keyframes cinAm{0%{opacity:1;transform:scale(1)}42%{opacity:1}50%,92%{opacity:0;transform:scale(1.05)}100%{opacity:1;transform:scale(1)}}
+  @keyframes cinBm{0%,42%{opacity:0;transform:scale(1)}50%{opacity:1}92%{opacity:1;transform:scale(1.05)}100%{opacity:0;transform:scale(1.06)}}
   .cin .glow{background:radial-gradient(ellipse at 50% 100%,rgba(255,160,26,.25),transparent 60%),linear-gradient(180deg,rgba(6,10,24,.35) 0%,rgba(6,10,24,.1) 30%,rgba(6,10,24,.55) 55%,rgba(6,10,24,.85) 100%)}
   #intro{padding-bottom:calc(120px + env(safe-area-inset-bottom,0px))}
   #intro h1{font-size:clamp(30px,9.4vw,44px)}
@@ -393,7 +393,7 @@ a.btn{text-decoration:none}
   <div class="wrap about">
     <p class="eyebrow">Новый год в DIO</p>
     <h2>В Греции его звали богом веселья. В Астане он тамада вашего праздника</h2>
-    <p>Дионис. Покровитель вина, застолья и праздника. Принимает гостей на Сарайшык, 34А.</p>
+    <p>Дионис. Покровитель вина, застолья и праздника. Принимает гостей на Сарайшык, 34В.</p>
     <div class="facts">
       <div class="fact rv"><b>15 – 30 декабря</b><span>сезон новогодних корпоративов</span></div>
     </div>
@@ -489,6 +489,7 @@ a.btn{text-decoration:none}
       <img class="photo rv" src="media/m_h1.jpg" alt="Зал Геркулес, стол на 18 гостей" loading="lazy">
       <img class="photo rv" src="media/m_h2.jpg" alt="Зал Геркулес, сервировка с цветами" loading="lazy">
       <div class="vt rv"><video src="media/m_h.mp4" poster="media/m_h_poster.jpg" muted loop playsinline preload="metadata" aria-label="Видео зала"></video><i>Видео</i></div>
+      <img class="photo rv" src="media/m_h3.jpg" alt="Зал Геркулес, общий вид с камином на экране" loading="lazy">
     </div>
   </div>
 </section>
@@ -577,7 +578,7 @@ a.btn{text-decoration:none}
     <h2>Забронируйте зал</h2>
     <div class="info">
       <div class="rv"><small>Телефон и WhatsApp</small><b>+7 700 600 53 63</b></div>
-      <div class="rv"><small>Адрес</small><b>ул. Сарайшык, 34А</b><span>Астана</span></div>
+      <div class="rv"><small>Адрес</small><b>ул. Сарайшык, 34В</b><span>Астана</span></div>
       <div class="rv"><small>Часы работы</small><b>Пн – Чт 10:00 – 00:00</b><span>Пт – Сб до 01:00 · Вс до 00:00</span></div>
     </div>
     <div class="links">
@@ -788,9 +789,9 @@ document.addEventListener('keydown',function(e){
   function build(){
     var vh=innerHeight;pos=[];
     slides.forEach(function(el){
-      var t=el.offsetTop,h=el.offsetHeight,d=el.classList.contains('gold')?5500:el.id==='cover'?3800:el.querySelector('.mg')?5500:4200;
+      var t=el.offsetTop,h=el.offsetHeight,d=el.classList.contains('gold')?720:el.id==='cover'?520:el.querySelector('.mg')?720:560;
       pos.push({y:t,d:d});
-      if(h>vh*1.08)pos.push({y:t+h-vh,d:d-1000});
+      if(h>vh*1.08)pos.push({y:t+h-vh,d:Math.max(200,d-140)});
     });
   }
   function ease(t){return -(Math.cos(Math.PI*t)-1)/2}
@@ -805,7 +806,7 @@ document.addEventListener('keydown',function(e){
     if(!run)return;
     if(i>=pos.length){run=false;root.classList.remove('auto');ui();return}
     k=i;
-    glide(pos[i].y,i===0?1:Math.min(2600,Math.max(1500,Math.abs(pos[i].y-scrollY)*1.4)),function(){tm=setTimeout(function(){go(i+1)},pos[i].d)});
+    glide(pos[i].y,i===0?1:Math.min(360,Math.max(180,Math.abs(pos[i].y-scrollY)*.16)),function(){tm=setTimeout(function(){go(i+1)},pos[i].d)});
   }
   function start(){
     build();run=true;root.classList.add('auto');ui();
